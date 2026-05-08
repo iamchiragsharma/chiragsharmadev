@@ -1,0 +1,12 @@
+.about-content {
+  max-width: 800px;
+}
+
+.about-content p {
+  font-size: 1.15rem;
+}
+
+.about-content strong {
+  color: var(--black);
+  font-weight: 700;
+}
