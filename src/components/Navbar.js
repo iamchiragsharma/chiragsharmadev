@@ -12,7 +12,9 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="logo">
-        CS<span className="dot">.</span>
+        <Link to="/" onClick={() => setIsOpen(false)} style={{ textDecoration: 'none', color: 'inherit' }}>
+          CS<span className="dot">.</span>
+        </Link>
       </div>
       <ul className={`nav-links ${isOpen ? 'nav-active' : ''}`}>
         <li><a href="#hero" onClick={() => setIsOpen(false)}>Home</a></li>

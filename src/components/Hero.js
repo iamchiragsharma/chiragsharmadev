@@ -7,34 +7,33 @@ const Hero = () => {
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
 
   useEffect(() => {
-    const type = () => {
-      const current = textArray[textIndex];
-      if (isDeleting) {
-        setCurrentText(current.substring(0, charIndex - 1));
-        setCharIndex(charIndex - 1);
+    const currentWord = textArray[textIndex];
+    let timer;
+
+    if (isDeleting) {
+      timer = setTimeout(() => {
+        setCurrentText(currentWord.substring(0, currentText.length - 1));
+        if (currentText.length <= 1) {
+          setIsDeleting(false);
+          setTextIndex((prev) => (prev + 1) % textArray.length);
+        }
+      }, 60);
+    } else {
+      if (currentText === currentWord) {
+        timer = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2500);
       } else {
-        setCurrentText(current.substring(0, charIndex + 1));
-        setCharIndex(charIndex + 1);
+        timer = setTimeout(() => {
+          setCurrentText(currentWord.substring(0, currentText.length + 1));
+        }, 120);
       }
+    }
 
-      let speed = isDeleting ? 60 : 120;
-      if (!isDeleting && charIndex === current.length) {
-        speed = 2500;
-        setIsDeleting(true);
-      } else if (isDeleting && charIndex === 0) {
-        setIsDeleting(false);
-        setTextIndex((textIndex + 1) % textArray.length);
-        speed = 500;
-      }
-      setTimeout(type, speed);
-    };
-
-    const timer = setTimeout(type, 1200);
     return () => clearTimeout(timer);
-  }, [charIndex, isDeleting, textIndex]);
+  }, [currentText, isDeleting, textIndex]);
 
   return (
     <header id="hero" className="section">

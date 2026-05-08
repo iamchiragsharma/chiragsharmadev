@@ -7,6 +7,7 @@ const Contact = () => {
     email: '',
     message: ''
   });
+  const [status, setStatus] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -15,10 +16,33 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    setStatus('Sending...');
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: 'bc6f0fdc-67de-4ae9-a5b4-a91d09a6e286',
+          subject: 'New Submission from Portfolio',
+          ...formData
+        })
+      });
+      const result = await response.json();
+      if (result.success) {
+        setStatus('Message sent successfully!');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setStatus('Something went wrong. Please try again.');
+    }
   };
 
   return (
@@ -62,6 +86,7 @@ const Contact = () => {
           ></textarea>
 
           <button type="submit" className="btn btn-primary hover-target">Send Message</button>
+          {status && <p className="form-status" style={{ marginTop: '15px' }}>{status}</p>}
         </form>
 
         <div className="social-links">
