@@ -58,3 +58,21 @@ If you bought your domain elsewhere:
 ---
 
 > **Note:** Because this project includes a `vercel.json` file, your React Router links (like `/blogs`) will work perfectly in production without causing "404 Not Found" errors when users refresh the page.
+
+---
+
+## How to Show Your "Download Resume" Button
+The "Download Resume" button in the Hero section is currently hidden. Whenever you have your resume ready and want to show the button again, follow these simple steps:
+
+1. Open `src/components/Hero.js` in your code editor.
+2. Scroll down to approximately line 52 inside the `<div className="cta-group">`.
+3. You will see the button wrapped in a JSX comment like this:
+   ```jsx
+   {/* <a href="resume.pdf" download="Chirag_Sharma_Resume.pdf" className="btn btn-outline hover-target">Download Resume</a> */}
+   ```
+4. Simply remove the `{/*` and `*/}` around the code so it looks like this:
+   ```jsx
+   <a href="resume.pdf" download="Chirag_Sharma_Resume.pdf" className="btn btn-outline hover-target">Download Resume</a>
+   ```
+5. Place your actual resume file in the `public` folder and name it `resume.pdf`.
+6. Save the file and deploy!
