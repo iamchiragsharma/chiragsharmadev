@@ -65,7 +65,7 @@ const BlogDetail = () => {
             ) : line.startsWith('-') ? (
               `• ${line.replace('-', '').trim()}`
             ) : line.startsWith('```') ? (
-              <code style={{ display: 'block', background: '#f5f5f5', padding: '1rem', borderRadius: '4px', margin: '1rem 0' }}>
+              <code style={{ display: 'block', background: 'var(--bg-secondary)', padding: '1rem', borderRadius: '4px', margin: '1rem 0' }}>
                 {line.replace(/```/g, '')}
               </code>
             ) : (
