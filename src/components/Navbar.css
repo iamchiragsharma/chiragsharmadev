@@ -94,7 +94,7 @@
     right: 0;
     height: 100vh;
     top: 0;
-    background: var(--glass-bg);
+    background: var(--bg-main);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     display: flex;
