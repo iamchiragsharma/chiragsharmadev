@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaSun, FaMoon } from 'react-icons/fa';
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ theme, toggleTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -23,6 +24,11 @@ const Navbar = () => {
         <li><a href="#projects" onClick={() => setIsOpen(false)}>Projects</a></li>
         <li><a href="#contact" onClick={() => setIsOpen(false)}>Contact</a></li>
         <li><Link to="/blogs" onClick={() => setIsOpen(false)}>Blogs</Link></li>
+        <li>
+          <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle Dark Mode">
+            {theme === 'light' ? <FaMoon size={18} /> : <FaSun size={18} />}
+          </button>
+        </li>
       </ul>
       <div className={`hamburger ${isOpen ? 'toggle' : ''}`} onClick={toggleMenu}>
         <div className="line1"></div>

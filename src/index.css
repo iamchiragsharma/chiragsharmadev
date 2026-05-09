@@ -7,6 +7,15 @@
   --black: #000000;
 }
 
+[data-theme='dark'] {
+  --bg-main: #111827;
+  --bg-secondary: #1F2937;
+  --text-primary: #F9FAFB;
+  --text-secondary: #9CA3AF;
+  --border-color: #374151;
+  --black: #FFFFFF;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -18,11 +27,14 @@ html {
   background-color: var(--bg-main);
   color: var(--text-primary);
   font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
   line-height: 1.6;
   overflow-x: hidden;
+  background-color: var(--bg-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3 {
