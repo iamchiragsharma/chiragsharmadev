@@ -7,7 +7,7 @@ const projects = [
   { title: 'The Instrument Place', type: 'Company\'s External Project' },
   { title: 'Used Parts Depot', type: 'Company\'s External Project' },
   { title: 'Farm Fresh Oils', type: 'Company\'s External Project' },
-  { title: 'Unstd Clothing', type: 'Company\'s External Project' },
+  { title: 'Unstd Clothing', type: '' },
 ];
 
 const Projects = () => {
@@ -18,7 +18,7 @@ const Projects = () => {
         {projects.map((project, index) => (
           <div key={index} className="project-card fade-up hover-target">
             <div className="project-info">
-              <p>{project.type}</p>
+              {project.type && <p>{project.type}</p>}
               <h3>{project.title}</h3>
             </div>
           </div>
