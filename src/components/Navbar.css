@@ -92,23 +92,26 @@
   .nav-links {
     position: fixed;
     right: 0;
-    height: 100vh;
+    left: 0;
+    bottom: 0;
     top: 0;
+    height: 100vh;
+    width: 100vw;
     background: var(--bg-main);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    transform: translateX(100%);
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    gap: 2rem;
+    transform: translateY(-100%);
+    transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    gap: 3rem;
+    padding: 0;
+    margin: 0;
+    z-index: 1000;
   }
 
   .nav-links.nav-active {
-    transform: translateX(0);
+    transform: translateY(0);
   }
 
   .hamburger {
@@ -139,7 +142,8 @@
   }
 
   .nav-links a {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
+    color: var(--text-primary);
   }
 
   .hamburger div {
