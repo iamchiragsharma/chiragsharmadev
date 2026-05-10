@@ -1,0 +1,71 @@
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 35px;
+  background: var(--bg-main);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 2000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.ticker-wrapper {
+  display: flex;
+  width: fit-content;
+}
+
+.ticker-content {
+  display: flex;
+  flex-shrink: 0;
+  white-space: nowrap;
+  animation: ticker 30s linear infinite;
+}
+
+.top-bar:hover .ticker-content {
+  animation-play-state: paused;
+}
+
+.ticker-item {
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.ticker-item .dot {
+  width: 8px;
+  height: 8px;
+  background: #10b981; /* Emerald Green */
+  border-radius: 50%;
+  margin-right: 10px;
+  box-shadow: 0 0 10px #10b981;
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Adjust layout for when top bar is present */
+@media screen and (max-width: 768px) {
+  .top-bar {
+    height: 30px;
+  }
+  
+  .ticker-item {
+    font-size: 0.65rem;
+    padding: 0 1rem;
+  }
+}

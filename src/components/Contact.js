@@ -93,7 +93,7 @@ const Contact = () => {
           <a href="https://www.linkedin.com/in/ch1r4gsh4rm4/" target="_blank" rel="noopener noreferrer" className="hover-target">LinkedIn</a>
           <a href="https://github.com/iamchiragsharma" target="_blank" rel="noopener noreferrer" className="hover-target">GitHub</a>
         </div>
-        <p className="copyright">&copy; 2026 Designed & Built by Chirag Sharma.</p>
+        <p className="copyright">&copy; 2026 Designed & Built by <span className="name-highlight">Chirag Sharma</span>.</p>
       </div>
     </footer>
   );

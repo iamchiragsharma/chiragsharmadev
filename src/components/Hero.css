@@ -1,3 +1,7 @@
+#hero {
+  padding-top: 160px;
+}
+
 .greeting {
   font-size: 1.2rem;
   color: var(--text-secondary);
@@ -54,6 +58,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  #hero {
+    padding-top: 150px;
+  }
+
   .greeting {
     font-size: 1rem;
     margin-bottom: 1rem;

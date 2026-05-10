@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import TopBar from './components/TopBar';
 import Home from './components/Home';
 import Blogs from './components/Blogs';
 import BlogDetail from './components/BlogDetail';
@@ -23,6 +24,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <TopBar />
         <Navbar theme={theme} toggleTheme={toggleTheme} />
         <main>
           <Routes>
