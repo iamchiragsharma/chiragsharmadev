@@ -22,6 +22,17 @@ const Home = () => {
 
     document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
 
+    // Handle initial hash scroll
+    const hash = window.location.hash;
+    if (hash) {
+      setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+
     return () => observer.disconnect();
   }, []);
 

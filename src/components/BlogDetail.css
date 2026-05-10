@@ -115,3 +115,72 @@
   color: var(--text-secondary);
   font-size: 0.8rem;
 }
+
+.blog-header {
+  margin-bottom: 3rem;
+}
+
+.blog-meta {
+  display: flex;
+  gap: 1.5rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.blog-category {
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.blog-h2 {
+  font-size: 1.8rem;
+  margin: 2.5rem 0 1rem;
+  color: var(--text-primary);
+}
+
+.blog-h3 {
+  font-size: 1.4rem;
+  margin: 2rem 0 0.8rem;
+  color: var(--text-primary);
+}
+
+.blog-p {
+  font-size: 1.15rem;
+  margin-bottom: 1.2rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.blog-li {
+  font-size: 1.15rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-secondary);
+  padding-left: 1.5rem;
+  position: relative;
+  list-style: none;
+}
+
+.blog-li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--text-primary);
+  font-weight: bold;
+}
+
+.blog-spacer {
+  height: 1rem;
+}
+
+.loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
