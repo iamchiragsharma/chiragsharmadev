@@ -184,3 +184,47 @@
   font-size: 1.5rem;
   font-weight: 600;
 }
+
+@media screen and (max-width: 768px) {
+  .blog-detail {
+    padding: 100px 5% 60px;
+  }
+
+  .blog-detail h1 {
+    font-size: 2rem;
+  }
+
+  .blog-h2 {
+    font-size: 1.5rem;
+    margin: 2rem 0 0.8rem;
+  }
+
+  .blog-h3 {
+    font-size: 1.2rem;
+    margin: 1.5rem 0 0.6rem;
+  }
+
+  .blog-p, .blog-li {
+    font-size: 1.05rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .blog-detail {
+    padding: 80px 5% 40px;
+  }
+
+  .blog-detail h1 {
+    font-size: 1.7rem;
+  }
+
+  .blog-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .back-btn {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}

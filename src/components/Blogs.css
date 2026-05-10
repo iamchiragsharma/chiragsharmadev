@@ -61,3 +61,34 @@
   text-align: center;
   padding: 2rem;
 }
+
+@media screen and (max-width: 768px) {
+  .blogs {
+    padding: 100px 5% 60px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .blogs {
+    padding: 80px 5% 40px;
+  }
+
+  .blog-card {
+    padding: 1.5rem;
+  }
+
+  .blog-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .blog-card .btn-outline {
+    width: 100%;
+    text-align: center;
+  }
+
+  .blog-date {
+    margin-bottom: 0;
+  }
+}

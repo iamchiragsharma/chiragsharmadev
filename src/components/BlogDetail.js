@@ -21,6 +21,22 @@ const BlogDetail = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    const elements = document.querySelectorAll('.fade-up');
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [blog]);
+
   const handleLike = () => {
     let storedBlogs = JSON.parse(localStorage.getItem('blogs_v2'));
     if (!storedBlogs || storedBlogs.length === 0) {
