@@ -60,6 +60,10 @@
 @media screen and (max-width: 768px) {
   #hero {
     padding-top: 150px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .greeting {

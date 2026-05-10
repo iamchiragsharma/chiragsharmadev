@@ -49,8 +49,10 @@ const Blogs = () => {
         {blogs && blogs.length > 0 ? (
           blogs.map(blog => (
             <div key={blog.id} className="blog-card fade-up hover-target">
-              <h3>{blog.title}</h3>
-              <p>{blog.excerpt}</p>
+              <div className="blog-card-content">
+                <h3>{blog.title}</h3>
+                <p>{blog.excerpt}</p>
+              </div>
               <div className="blog-footer">
                 <p className="blog-date">{new Date(blog.date).toLocaleDateString()}</p>
                 <Link to={`/blogs/${blog.id}`} className="btn btn-outline hover-target">Read More</Link>

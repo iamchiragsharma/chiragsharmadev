@@ -46,16 +46,16 @@ const Navbar = ({ theme, toggleTheme }) => {
         <NavLink id="projects">Projects</NavLink>
         <NavLink id="contact">Contact</NavLink>
         <li><Link to="/blogs" onClick={() => setIsOpen(false)}>Blogs</Link></li>
-        <li>
-          <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle Dark Mode">
-            {theme === 'light' ? <FaMoon size={18} /> : <FaSun size={18} />}
-          </button>
-        </li>
       </ul>
-      <div className={`hamburger ${isOpen ? 'toggle' : ''}`} onClick={toggleMenu}>
-        <div className="line1"></div>
-        <div className="line2"></div>
-        <div className="line3"></div>
+      <div className="nav-actions">
+        <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle Dark Mode">
+          {theme === 'light' ? <FaMoon size={18} /> : <FaSun size={18} />}
+        </button>
+        <div className={`hamburger ${isOpen ? 'toggle' : ''}`} onClick={toggleMenu}>
+          <div className="line1"></div>
+          <div className="line2"></div>
+          <div className="line3"></div>
+        </div>
       </div>
     </nav>
   );
