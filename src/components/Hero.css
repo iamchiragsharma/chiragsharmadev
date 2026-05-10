@@ -59,7 +59,7 @@
 
 @media screen and (max-width: 768px) {
   #hero {
-    padding-top: 150px;
+    padding-top: 100px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
