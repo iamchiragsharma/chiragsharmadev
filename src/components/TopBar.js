@@ -2,20 +2,22 @@ import React from 'react';
 import './TopBar.css';
 
 const TopBar = () => {
+  const tickerText = "OPEN TO WORK";
+  const items = Array(15).fill(tickerText);
+
   return (
     <div className="top-bar">
       <div className="ticker-wrapper">
         <div className="ticker-content">
-          {[...Array(20)].map((_, i) => (
-            <span key={i} className="ticker-item">
-              <span className="dot"></span> OPEN TO WORK
+          {items.map((text, i) => (
+            <span key={`a-${i}`} className="ticker-item">
+              <span className="dot"></span> {text}
             </span>
           ))}
-        </div>
-        <div className="ticker-content">
-          {[...Array(20)].map((_, i) => (
-            <span key={i} className="ticker-item">
-              <span className="dot"></span> OPEN TO WORK
+          {/* Duplicate for seamless loop */}
+          {items.map((text, i) => (
+            <span key={`b-${i}`} className="ticker-item">
+              <span className="dot"></span> {text}
             </span>
           ))}
         </div>
