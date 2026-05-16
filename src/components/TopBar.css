@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 35px;
+  height: 28px;
   background: var(--bg-main);
   border-bottom: 1px solid var(--border-color);
   z-index: 2000;
@@ -22,20 +22,14 @@
   display: flex;
   flex-shrink: 0;
   white-space: nowrap;
-  animation: ticker 60s linear infinite;
-  transition: animation-duration 2s ease-in-out;
   will-change: transform;
-}
-
-.top-bar:hover .ticker-content {
-  animation-play-state: paused;
 }
 
 .ticker-item {
   display: flex;
   align-items: center;
   padding: 0 3rem;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 2.5px;
   color: var(--text-primary);
@@ -70,11 +64,11 @@
 /* Adjust layout for when top bar is present */
 @media screen and (max-width: 768px) {
   .top-bar {
-    height: 30px;
+    height: 24px;
   }
   
   .ticker-item {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     padding: 0 1rem;
   }
 }

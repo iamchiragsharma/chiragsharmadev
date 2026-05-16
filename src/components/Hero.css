@@ -4,6 +4,9 @@
   background-color: var(--bg-main);
   overflow: hidden;
   transition: background-color 0.3s ease;
+  max-width: 100%; /* Override .section max-width */
+  margin: 0;
+  width: 100%;
 }
 
 /* Gradient Blobs */
@@ -28,8 +31,8 @@
   height: 60vw;
   min-width: 450px;
   min-height: 450px;
-  max-width: 600px;
-  max-height: 600px;
+  max-width: none;
+  max-height: none;
   background: radial-gradient(circle, rgba(0, 238, 255, 0.7) 0%, transparent 70%);
   animation: float-cyan 20s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
@@ -42,8 +45,8 @@
   height: 55vw;
   min-width: 400px;
   min-height: 400px;
-  max-width: 550px;
-  max-height: 550px;
+  max-width: none;
+  max-height: none;
   background: radial-gradient(circle, rgba(174, 0, 255, 0.7) 0%, transparent 70%);
   animation: float-purple 25s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
@@ -109,6 +112,9 @@
   position: relative;
   z-index: 1;
   animation: float 6s ease-in-out infinite;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 @keyframes float {

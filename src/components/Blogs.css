@@ -4,6 +4,110 @@
   margin: 0 auto;
 }
 
+.blogs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.blogs-header .section-title {
+  margin-bottom: 0;
+}
+
+.blog-search-wrapper {
+  flex-grow: 1;
+  max-width: 400px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.blog-search-container {
+  display: flex;
+  align-items: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: 99px;
+  padding: 0.8rem 1.5rem;
+  width: 100%;
+  box-shadow: var(--glass-shadow);
+  transition: all 0.3s ease;
+}
+
+.blog-search-container:focus-within {
+  border-color: var(--text-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='dark'] .blog-search-container:focus-within {
+  box-shadow: 0 12px 30px rgba(255, 255, 255, 0.05);
+}
+
+.search-icon {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-right: 0.8rem;
+  flex-shrink: 0;
+}
+
+.blog-search-input {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: inherit;
+  width: 100%;
+  outline: none;
+}
+
+.blog-search-input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.search-clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem;
+  margin-left: 0.5rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.search-clear-btn:hover {
+  color: var(--text-primary);
+  transform: scale(1.1);
+}
+
+.blogs-empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.blogs-empty-state p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+
 .blogs-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -75,6 +179,16 @@
 @media screen and (max-width: 768px) {
   .blogs {
     padding: 180px 5% 60px;
+  }
+  
+  .blogs-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .blog-search-wrapper {
+    max-width: 100%;
+    width: 100%;
   }
 }
 
