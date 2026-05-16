@@ -49,7 +49,7 @@ const Hero = () => {
         </p>
         <div className="cta-group fade-up">
           <a href="#projects" className="btn btn-primary hover-target">View My Work</a>
-          {/* <a href="resume.pdf" download="Chirag_Sharma_Resume.pdf" className="btn btn-outline hover-target">Download Resume</a> */}
+          <a href="/resume.pdf" download="Chirag_Sharma_Resume.pdf" className="btn btn-outline hover-target">Download Resume</a>
         </div>
       </div>
     </header>
