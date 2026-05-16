@@ -12,7 +12,7 @@ const BlogDetail = () => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    const storedBlogs = JSON.parse(localStorage.getItem('blogs_v3'));
+    const storedBlogs = JSON.parse(localStorage.getItem('blogs_v4'));
     const sourceData = storedBlogs && storedBlogs.length > 0 ? storedBlogs : sampleBlogs;
     const foundBlog = sourceData.find(b => b.id === parseInt(id));
     if (foundBlog) {
@@ -38,14 +38,14 @@ const BlogDetail = () => {
   }, [blog]);
 
   const handleLike = () => {
-    let storedBlogs = JSON.parse(localStorage.getItem('blogs_v3'));
+    let storedBlogs = JSON.parse(localStorage.getItem('blogs_v4'));
     if (!storedBlogs || storedBlogs.length === 0) {
       storedBlogs = sampleBlogs;
     }
     const updatedBlogs = storedBlogs.map(b =>
       b.id === parseInt(id) ? { ...b, likes: (b.likes || 0) + 1 } : b
     );
-    localStorage.setItem('blogs_v3', JSON.stringify(updatedBlogs));
+    localStorage.setItem('blogs_v4', JSON.stringify(updatedBlogs));
     setBlog(prev => ({ ...prev, likes: (prev.likes || 0) + 1 }));
   };
 
@@ -57,7 +57,7 @@ const BlogDetail = () => {
         text: comment,
         date: new Date().toISOString()
       };
-      let storedBlogs = JSON.parse(localStorage.getItem('blogs_v3'));
+      let storedBlogs = JSON.parse(localStorage.getItem('blogs_v4'));
       if (!storedBlogs || storedBlogs.length === 0) {
         storedBlogs = sampleBlogs;
       }
@@ -68,7 +68,7 @@ const BlogDetail = () => {
       const updatedBlogs = storedBlogs.map(b =>
         b.id === parseInt(id) ? { ...b, comments: updatedComments } : b
       );
-      localStorage.setItem('blogs_v3', JSON.stringify(updatedBlogs));
+      localStorage.setItem('blogs_v4', JSON.stringify(updatedBlogs));
     }
   };
 

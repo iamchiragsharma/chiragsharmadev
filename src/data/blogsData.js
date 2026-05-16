@@ -1,10 +1,10 @@
 export const sampleBlogs = [
   {
     id: 1,
-    title: 'How to Install Magento 2 (Latest Version) on Ubuntu - The Ultimate Guide',
-    excerpt: 'The most complete, end-to-end guide to installing Magento 2.4.7+ on Ubuntu. Covers LAMP, OpenSearch, Virtual Hosts, Cron Jobs, and solving the 2FA login issue.',
+    title: 'How to Install Magento 2.4.9 (Latest Version) on Ubuntu - The Ultimate Guide',
+    excerpt: 'The most complete, end-to-end guide to installing Magento 2.4.9 on Ubuntu. Covers LAMP, PHP 8.3/8.4, OpenSearch, Virtual Hosts, Cron Jobs, and solving the 2FA login issue.',
     category: 'Tutorial',
-    content: `Installing Magento 2 is famous for being "difficult," but that is only because most guides miss the small details. In this ultimate end-to-end guide, we will install Magento 2.4.7 (the latest version) on Ubuntu with zero errors.
+    content: `Installing Magento 2 is famous for being "difficult," but that is only because most guides miss the small details. In this ultimate end-to-end guide, we will install **Magento 2.4.9** (the latest stable version released May 2026) on Ubuntu with zero errors.
 
 ## Step 1: System Update
 Start by making sure your Ubuntu server is completely up to date.
@@ -21,13 +21,13 @@ sudo a2enmod rewrite
 sudo systemctl restart apache2
 \`\`\`
 
-## Step 3: Install PHP 8.2 & Extensions
-Magento 2.4.7 requires PHP 8.2 or 8.3. We will use 8.2 for maximum stability.
+## Step 3: Install PHP 8.3 (or 8.4) & Extensions
+Magento 2.4.9 supports the latest PHP versions. We will use **PHP 8.3** as it is the current standard for stability and speed.
 \`\`\`bash
 sudo apt install software-properties-common -y
 sudo add-apt-repository ppa:ondrej/php -y
 sudo apt update
-sudo apt install php8.2 php8.2-cli php8.2-fpm php8.2-mysql php8.2-xml php8.2-curl php8.2-gd php8.2-intl php8.2-mbstring php8.2-soap php8.2-zip php8.2-bcmath -y
+sudo apt install php8.3 php8.3-cli php8.3-fpm php8.3-mysql php8.3-xml php8.3-curl php8.3-gd php8.3-intl php8.3-mbstring php8.3-soap php8.3-zip php8.3-bcmath -y
 \`\`\`
 **Crucial:** Update your \`php.ini\` (both for Apache and CLI):
 \`\`\`ini
@@ -50,8 +50,8 @@ FLUSH PRIVILEGES;
 EXIT;
 \`\`\`
 
-## Step 5: Install OpenSearch (Required)
-Magento 2.4+ will NOT install without a search engine. OpenSearch is the modern choice.
+## Step 5: Install OpenSearch 2.x (Required)
+Magento 2.4+ will NOT install without a search engine. OpenSearch is the modern, open-source requirement.
 \`\`\`bash
 curl -fsSL https://artifacts.opensearch.org/publickeys/opensearch.pgp | sudo gpg --dearmor -o /usr/share/keyrings/opensearch.gpg
 echo "deb [signed-by=/usr/share/keyrings/opensearch.gpg] https://artifacts.opensearch.org/releases/bundle/opensearch/2.x/apt stable main" | sudo tee /etc/apt/sources.list.d/opensearch-2.x.list
@@ -67,16 +67,16 @@ curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 \`\`\`
 
-## Step 7: Download Magento 2.4.7
-Navigate to your web directory and pull the code:
+## Step 7: Download Magento 2.4.9
+Navigate to your web directory and pull the latest code:
 \`\`\`bash
 cd /var/www/html
-sudo composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition magento2
+sudo composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.9 magento2
 \`\`\`
 *(Note: You need your Public/Private keys from marketplace.magento.com).*
 
 ## Step 8: Apache Virtual Host Configuration
-This is where most people fail. You MUST point your DocumentRoot to the \`pub/\` folder.
+You MUST point your DocumentRoot to the \`pub/\` folder.
 \`\`\`bash
 sudo nano /etc/apache2/sites-available/magento2.conf
 \`\`\`
@@ -125,26 +125,26 @@ bin/magento setup:install \\
 --opensearch-port="9200"
 \`\`\`
 
-## Step 10: The "2FA" Fix (Important!)
-By default, Magento 2.4.7 enables Two-Factor Authentication. If you are on a local/dev server, you might get locked out. Disable it to log in for the first time:
+## Step 10: The "2FA" Fix
+By default, Magento enables Two-Factor Authentication. Disable it temporarily to log in for the first time:
 \`\`\`bash
 bin/magento module:disable Magento_TwoFactorAuth
 bin/magento cache:flush
 \`\`\`
 
 ## Step 11: Final Polish (Cron & Mode)
-Install the crontab so Magento can run background tasks:
+Install the crontab:
 \`\`\`bash
 bin/magento cron:install
 \`\`\`
-And set the mode to developer (if you are still building):
+And set the mode to developer:
 \`\`\`bash
 bin/magento deploy:mode:set developer
 \`\`\`
 
-Congratulations! You have just completed a professional, end-to-end Magento 2 installation.`,
+Congratulations! You have installed the latest stable **Magento 2.4.9** on Ubuntu.`,
     date: '2026-05-16',
-    likes: 85,
+    likes: 124,
     comments: []
   }
 ];

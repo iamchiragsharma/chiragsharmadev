@@ -11,7 +11,7 @@ const Blogs = () => {
   useEffect(() => {
     // Load blogs from localStorage or initialize with sample data
     try {
-      const stored = localStorage.getItem('blogs_v3');
+      const stored = localStorage.getItem('blogs_v4');
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
@@ -25,7 +25,7 @@ const Blogs = () => {
     
     // Fallback to sample data
     setBlogs(sampleBlogs);
-    localStorage.setItem('blogs_v3', JSON.stringify(sampleBlogs));
+    localStorage.setItem('blogs_v4', JSON.stringify(sampleBlogs));
   }, []);
 
   const filteredBlogs = useMemo(() => {

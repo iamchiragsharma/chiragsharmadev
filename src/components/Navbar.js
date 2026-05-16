@@ -36,7 +36,7 @@ const Navbar = ({ theme, toggleTheme }) => {
     <nav className="navbar">
       <div className="logo">
         <Link to="/" onClick={() => setIsOpen(false)} style={{ textDecoration: 'none', color: 'inherit' }}>
-          CS<span className="dot">.</span>
+          CS
         </Link>
       </div>
       <ul className={`nav-links ${isOpen ? 'nav-active' : ''}`}>

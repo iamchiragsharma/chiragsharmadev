@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Hero.css';
 
-const textArray = ["Software Developer.", "Magento 2 Specialist.", "Problem Solver."];
+const textArray = ["Software Developer", "Magento 2 Specialist", "Problem Solver"];
 
 const Hero = () => {
   const [currentText, setCurrentText] = useState('');
@@ -39,7 +39,7 @@ const Hero = () => {
     <header id="hero" className="section">
       <div className="hero-content">
         <h2 className="greeting fade-up">Hello, world! I'm</h2>
-        <h1 className="name fade-up">Chirag Sharma.</h1>
+        <h1 className="name fade-up">Chirag Sharma</h1>
         <h2 className="role fade-up">
           <span className="typewriter">{currentText}</span>
           <span className="cursor">|</span>
