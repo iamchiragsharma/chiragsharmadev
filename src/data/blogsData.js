@@ -1,105 +1,150 @@
 export const sampleBlogs = [
   {
     id: 1,
-    title: 'The Silent Revolution: How Hyvä Themes Saved Magento 2',
-    excerpt: 'A deep dive into why Hyvä is replacing the aging Luma frontend and becoming the gold standard for Magento performance.',
-    category: 'Magento 2',
-    content: `It was early 2021 when the Magento community felt a shift. For years, developers had struggled with the complexity of the Luma and Blank themes—huge bundles of RequireJS, Knockout.js, and thousands of lines of legacy CSS.
+    title: 'How to Install Magento 2 (Latest Version) on Ubuntu - The Ultimate Guide',
+    excerpt: 'The most complete, end-to-end guide to installing Magento 2.4.7+ on Ubuntu. Covers LAMP, OpenSearch, Virtual Hosts, Cron Jobs, and solving the 2FA login issue.',
+    category: 'Tutorial',
+    content: `Installing Magento 2 is famous for being "difficult," but that is only because most guides miss the small details. In this ultimate end-to-end guide, we will install Magento 2.4.7 (the latest version) on Ubuntu with zero errors.
 
-## The Problem with the Monolith
-Magento 2 was powerful, but its frontend was slow. Achieving a 90+ Lighthouse score felt like a dark art involving massive Varnish configurations and aggressive bundling that often broke more than it fixed.
+## Step 1: System Update
+Start by making sure your Ubuntu server is completely up to date.
+\`\`\`bash
+sudo apt update && sudo apt upgrade -y
+\`\`\`
 
-## Enter Willem Wigman and Hyvä
-When Willem Wigman introduced Hyvä, it wasn't just a new theme; it was a declaration of simplicity. By stripping away the legacy bloat and replacing it with Tailwind CSS and Alpine.js, Hyvä brought modern developer experience back to Magento.
+## Step 2: Install Apache Web Server
+Apache is our primary web server.
+\`\`\`bash
+sudo apt install apache2 -y
+sudo systemctl enable apache2
+sudo a2enmod rewrite
+sudo systemctl restart apache2
+\`\`\`
 
-### Why It Matters
-Today, Hyvä is the standard. It has single-handedly kept Magento 2 relevant in an era of lightning-fast headless alternatives. For merchants, it means higher conversion rates. For developers, it means joy in coding again.`,
-    date: '2026-05-10',
-    likes: 124,
-    comments: []
-  },
-  {
-    id: 2,
-    title: 'Beyond the Monolith: My Journey into Composable Commerce',
-    excerpt: 'Scaling Magento 2 by decoupling the frontend and using Alokai (Vue Storefront) for a truly headless experience.',
-    category: 'Magento 2',
-    content: `The term "Headless" used to be a buzzword. In 2026, it's a necessity for enterprise-level scale. This is the story of how we took a $50M/year retailer from a monolithic Magento setup to a composable architecture.
+## Step 3: Install PHP 8.2 & Extensions
+Magento 2.4.7 requires PHP 8.2 or 8.3. We will use 8.2 for maximum stability.
+\`\`\`bash
+sudo apt install software-properties-common -y
+sudo add-apt-repository ppa:ondrej/php -y
+sudo apt update
+sudo apt install php8.2 php8.2-cli php8.2-fpm php8.2-mysql php8.2-xml php8.2-curl php8.2-gd php8.2-intl php8.2-mbstring php8.2-soap php8.2-zip php8.2-bcmath -y
+\`\`\`
+**Crucial:** Update your \`php.ini\` (both for Apache and CLI):
+\`\`\`ini
+memory_limit = 2G
+max_execution_time = 1800
+zlib.output_compression = On
+\`\`\`
 
-## The Breaking Point
-Our client was hitting limits. During Black Friday, the sheer weight of rendering pages on the server was killing the origin. We needed a frontend that could scale independently of the backend logic.
+## Step 4: Install MySQL 8.0
+\`\`\`bash
+sudo apt install mysql-server -y
+sudo mysql -u root -p
+\`\`\`
+Inside MySQL, create the database:
+\`\`\`sql
+CREATE DATABASE magento2;
+CREATE USER 'magento_user'@'localhost' IDENTIFIED BY 'StrongPassword123!';
+GRANT ALL PRIVILEGES ON magento2.* TO 'magento_user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+\`\`\`
 
-## The Solution: Alokai + Magento GraphQL
-We chose Alokai (formerly Vue Storefront) for its robust integration with Magento's GraphQL API. By treating Magento purely as a commerce engine—handling inventory, prices, and orders—and moving the UI to a modern React-based edge-rendered frontend, we achieved true separation of concerns.
+## Step 5: Install OpenSearch (Required)
+Magento 2.4+ will NOT install without a search engine. OpenSearch is the modern choice.
+\`\`\`bash
+curl -fsSL https://artifacts.opensearch.org/publickeys/opensearch.pgp | sudo gpg --dearmor -o /usr/share/keyrings/opensearch.gpg
+echo "deb [signed-by=/usr/share/keyrings/opensearch.gpg] https://artifacts.opensearch.org/releases/bundle/opensearch/2.x/apt stable main" | sudo tee /etc/apt/sources.list.d/opensearch-2.x.list
+sudo apt update
+sudo apt install opensearch -y
+sudo systemctl enable opensearch
+sudo systemctl start opensearch
+\`\`\`
 
-### The Result
-- 400% increase in checkout speed.
-- Seamless integration with third-party CMS (Contentful) and Search (Algolia).
-- Zero downtime during the biggest sales events of the year.`,
-    date: '2026-05-05',
-    likes: 89,
-    comments: []
-  },
-  {
-    id: 3,
-    title: 'The Ghost in the Machine: Debugging Checkout at 3 AM',
-    excerpt: 'A high-stakes story of a database deadlock that nearly brought down a global fashion brand during a celebrity drop.',
-    category: 'Magento 2',
-    content: `The notification sound at 3:14 AM is never good. "Checkout failure rate: 85%." One of the world's largest fashion brands was in the middle of a limited celebrity drop, and Magento was screaming.
+## Step 6: Install Composer 2
+\`\`\`bash
+curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+\`\`\`
 
-## The Investigation
-We dove into the MySQL slow query logs. The culprit? A classic database deadlock on the 'sales_flat_quote' tables. Under the massive load of 50,000 concurrent users, Magento's default locking mechanism was choking.
+## Step 7: Download Magento 2.4.7
+Navigate to your web directory and pull the code:
+\`\`\`bash
+cd /var/www/html
+sudo composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition magento2
+\`\`\`
+*(Note: You need your Public/Private keys from marketplace.magento.com).*
 
-## The Fix
-We didn't just restart services. We implemented a custom queueing system for quote updates and moved the session storage from the database to an optimized Redis cluster. We also identified a third-party tax calculation extension that was making blocking API calls during the checkout flow.
+## Step 8: Apache Virtual Host Configuration
+This is where most people fail. You MUST point your DocumentRoot to the \`pub/\` folder.
+\`\`\`bash
+sudo nano /etc/apache2/sites-available/magento2.conf
+\`\`\`
+Paste this (replace \`example.com\` with your IP/Domain):
+\`\`\`apache
+<VirtualHost *:80>
+    ServerName example.com
+    DocumentRoot /var/www/html/magento2/pub
+    <Directory /var/www/html/magento2/pub>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+\`\`\`
+\`\`\`bash
+sudo a2ensite magento2.conf
+sudo a2dissite 000-default.conf
+sudo systemctl restart apache2
+\`\`\`
 
-### Lessons Learned
-Performance isn't just about fast page loads; it's about stability under pressure. If your checkout can't handle the peak, your marketing spend is wasted.`,
-    date: '2026-04-28',
-    likes: 215,
-    comments: []
-  },
-  {
-    id: 4,
-    title: 'Architecting for the Unknown: Global Scaling on AWS',
-    excerpt: 'How we built a multi-region Magento 2 infrastructure that handles millions of requests with sub-second latency.',
-    category: 'Magento 2',
-    content: `Building for one country is easy. Building for thirty, with low latency in Tokyo, London, and New York simultaneously? That's where the real architecture begins.
+## Step 9: Permissions & Installation
+\`\`\`bash
+cd /var/www/html/magento2
+sudo find var generated vendor pub/static pub/media app/etc -type f -exec chmod g+w {} +
+sudo find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} +
+sudo chown -R www-data:www-data .
 
-## The Global Challenge
-Latency is the enemy of e-commerce. A 100ms delay in New York might be a 2-second delay for a user in Singapore if your server is only in US-East-1.
+bin/magento setup:install \\
+--base-url="http://example.com/" \\
+--db-host="localhost" \\
+--db-name="magento2" \\
+--db-user="magento_user" \\
+--db-password="StrongPassword123!" \\
+--admin-firstname="Admin" \\
+--admin-lastname="User" \\
+--admin-email="admin@example.com" \\
+--admin-user="admin" \\
+--admin-password="AdminPassword123!" \\
+--language="en_US" \\
+--currency="USD" \\
+--timezone="America/Chicago" \\
+--use-rewrites="1" \\
+--search-engine="opensearch" \\
+--opensearch-host="localhost" \\
+--opensearch-port="9200"
+\`\`\`
 
-## The AWS Multi-Region Stack
-We implemented a sophisticated stack using:
-- **AWS Global Accelerator** to route traffic to the nearest healthy region.
-- **Aurora Global Database** for real-time data replication across continents.
-- **CloudFront Function** for edge-side localization and currency switching.
+## Step 10: The "2FA" Fix (Important!)
+By default, Magento 2.4.7 enables Two-Factor Authentication. If you are on a local/dev server, you might get locked out. Disable it to log in for the first time:
+\`\`\`bash
+bin/magento module:disable Magento_TwoFactorAuth
+bin/magento cache:flush
+\`\`\`
 
-### The Global Experience
-By architecting for the edge, we ensured that every customer, regardless of location, received a local-like experience. This wasn't just a technical win; it was a massive business win for our client's international expansion.`,
-    date: '2026-04-15',
-    likes: 156,
-    comments: []
-  },
-  {
-    id: 5,
-    title: 'The AI Oracle: Integrating Generative Search',
-    excerpt: 'Replacing traditional keyword search with LLM-powered discovery to double conversion rates in Magento 2.',
-    category: 'Magento 2',
-    content: `Traditional search is broken. When a user types "red dress for a summer wedding," they don't just want items with those keywords. They want a curated collection that fits the vibe.
+## Step 11: Final Polish (Cron & Mode)
+Install the crontab so Magento can run background tasks:
+\`\`\`bash
+bin/magento cron:install
+\`\`\`
+And set the mode to developer (if you are still building):
+\`\`\`bash
+bin/magento deploy:mode:set developer
+\`\`\`
 
-## The Shift to Semantic Search
-In late 2025, we integrated a custom Vector Database with Magento 2. Instead of matching text, we started matching intent. Using OpenAI's embeddings, we mapped the entire product catalog into a high-dimensional space.
-
-## The User Experience
-Now, users can talk to the search bar. "Find me something that matches these shoes I just bought." The AI understands the context, the style, and the occasion.
-
-### The Conversion Jump
-Since implementing Generative Search:
-- 45% reduction in "no results found" pages.
-- 2x increase in Add-to-Cart from search results.
-- A significant boost in average order value through intelligent cross-selling.`,
-    date: '2026-04-02',
-    likes: 312,
+Congratulations! You have just completed a professional, end-to-end Magento 2 installation.`,
+    date: '2026-05-16',
+    likes: 85,
     comments: []
   }
 ];

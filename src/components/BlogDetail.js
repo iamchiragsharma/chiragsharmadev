@@ -12,7 +12,7 @@ const BlogDetail = () => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    const storedBlogs = JSON.parse(localStorage.getItem('blogs_v2'));
+    const storedBlogs = JSON.parse(localStorage.getItem('blogs_v3'));
     const sourceData = storedBlogs && storedBlogs.length > 0 ? storedBlogs : sampleBlogs;
     const foundBlog = sourceData.find(b => b.id === parseInt(id));
     if (foundBlog) {
@@ -38,14 +38,14 @@ const BlogDetail = () => {
   }, [blog]);
 
   const handleLike = () => {
-    let storedBlogs = JSON.parse(localStorage.getItem('blogs_v2'));
+    let storedBlogs = JSON.parse(localStorage.getItem('blogs_v3'));
     if (!storedBlogs || storedBlogs.length === 0) {
       storedBlogs = sampleBlogs;
     }
     const updatedBlogs = storedBlogs.map(b =>
       b.id === parseInt(id) ? { ...b, likes: (b.likes || 0) + 1 } : b
     );
-    localStorage.setItem('blogs_v2', JSON.stringify(updatedBlogs));
+    localStorage.setItem('blogs_v3', JSON.stringify(updatedBlogs));
     setBlog(prev => ({ ...prev, likes: (prev.likes || 0) + 1 }));
   };
 
@@ -57,7 +57,7 @@ const BlogDetail = () => {
         text: comment,
         date: new Date().toISOString()
       };
-      let storedBlogs = JSON.parse(localStorage.getItem('blogs_v2'));
+      let storedBlogs = JSON.parse(localStorage.getItem('blogs_v3'));
       if (!storedBlogs || storedBlogs.length === 0) {
         storedBlogs = sampleBlogs;
       }
@@ -68,50 +68,82 @@ const BlogDetail = () => {
       const updatedBlogs = storedBlogs.map(b =>
         b.id === parseInt(id) ? { ...b, comments: updatedComments } : b
       );
-      localStorage.setItem('blogs_v2', JSON.stringify(updatedBlogs));
+      localStorage.setItem('blogs_v3', JSON.stringify(updatedBlogs));
     }
   };
 
   if (!blog) return <div className="loading">Loading...</div>;
 
   const renderContent = (content) => {
-    return content.split('\n').map((line, index) => {
+    if (!content) return null;
+    const lines = content.split('\n');
+    const result = [];
+    let isCodeBlock = false;
+    let codeContent = [];
+    let codeLang = '';
+
+    lines.forEach((line, index) => {
       const trimmedLine = line.trim();
+
+      if (trimmedLine.startsWith('```')) {
+        if (!isCodeBlock) {
+          isCodeBlock = true;
+          codeLang = trimmedLine.replace('```', '');
+          codeContent = [];
+        } else {
+          isCodeBlock = false;
+          result.push(
+            <div key={`code-${index}`} className="blog-code-wrapper visible">
+              {codeLang && <span className="code-lang">{codeLang}</span>}
+              <pre className="blog-pre">
+                <code>{codeContent.join('\n')}</code>
+              </pre>
+            </div>
+          );
+        }
+        return;
+      }
+
+      if (isCodeBlock) {
+        codeContent.push(line);
+        return;
+      }
+
       if (trimmedLine.startsWith('## ')) {
-        return <h2 key={index} className="blog-h2">{trimmedLine.replace('## ', '')}</h2>;
+        result.push(<h2 key={index} className="blog-h2 visible">{trimmedLine.replace('## ', '')}</h2>);
+      } else if (trimmedLine.startsWith('### ')) {
+        result.push(<h3 key={index} className="blog-h3 visible">{trimmedLine.replace('### ', '')}</h3>);
+      } else if (trimmedLine.startsWith('- ')) {
+        result.push(<li key={index} className="blog-li visible">{trimmedLine.replace('- ', '')}</li>);
+      } else if (trimmedLine === '') {
+        result.push(<div key={index} className="blog-spacer" />);
+      } else {
+        result.push(<p key={index} className="blog-p visible">{line}</p>);
       }
-      if (trimmedLine.startsWith('### ')) {
-        return <h3 key={index} className="blog-h3">{trimmedLine.replace('### ', '')}</h3>;
-      }
-      if (trimmedLine.startsWith('- ')) {
-        return <li key={index} className="blog-li">{trimmedLine.replace('- ', '')}</li>;
-      }
-      if (trimmedLine === '') {
-        return <div key={index} className="blog-spacer" />;
-      }
-      return <p key={index} className="blog-p">{line}</p>;
     });
+
+    return result;
   };
 
   return (
     <section className="blog-detail section">
-      <button onClick={() => navigate('/blogs')} className="back-btn">← Back to Blogs</button>
-      <div className="blog-header fade-up">
+      <button onClick={() => navigate('/blogs')} className="back-btn hover-target">← Back to Blogs</button>
+      <div className="blog-header visible">
         <h1>{blog.title}</h1>
         <div className="blog-meta">
           <span className="blog-category">{blog.category}</span>
           <span className="blog-date">{new Date(blog.date).toLocaleDateString()}</span>
         </div>
       </div>
-      <div className="blog-content fade-up">
+      <div className="blog-content visible">
         {renderContent(blog.content)}
       </div>
-      <div className="blog-actions">
-        <button onClick={handleLike} className="like-btn">
+      <div className="blog-actions visible">
+        <button onClick={handleLike} className="like-btn hover-target">
           <FaThumbsUp /> Like ({blog.likes})
         </button>
       </div>
-      <div className="comments-section">
+      <div className="comments-section visible">
         <h3><FaComment /> Comments</h3>
         <form onSubmit={handleComment} className="comment-form">
           <textarea

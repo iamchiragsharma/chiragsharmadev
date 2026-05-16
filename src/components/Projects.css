@@ -10,6 +10,20 @@
   margin-bottom: 0;
 }
 
+.mobile-swipe-indicator {
+  display: none;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  animation: pulse-swipe 2s infinite ease-in-out;
+}
+
+@keyframes pulse-swipe {
+  0%, 100% { opacity: 0.6; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(5px); }
+}
+
 .slider-arrow {
   position: absolute;
   top: 50%;
@@ -132,6 +146,14 @@
   .project-card {
     min-width: 450px;
     max-width: 450px;
+  }
+  
+  .slider-arrow {
+    display: none;
+  }
+  
+  .mobile-swipe-indicator {
+    display: inline-block;
   }
 }
 

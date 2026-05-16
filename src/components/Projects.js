@@ -138,6 +138,7 @@ const Projects = () => {
     <section id="projects" className="section">
       <div className="projects-header fade-up">
         <h2 className="section-title">Projects</h2>
+        <span className="mobile-swipe-indicator">Swipe to see more →</span>
       </div>
       
       <div className="projects-slider-wrapper fade-up">

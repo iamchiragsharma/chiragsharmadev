@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { FaCommentDots, FaTimes, FaRobot } from 'react-icons/fa';
 import './Contact.css';
 
 const Contact = () => {
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -36,6 +38,11 @@ const Contact = () => {
       if (result.success) {
         setStatus('Message sent successfully!');
         setFormData({ name: '', email: '', message: '' });
+        
+        // Clear success message after 4 seconds
+        setTimeout(() => {
+          setStatus('');
+        }, 4000);
       } else {
         setStatus('Something went wrong. Please try again.');
       }
@@ -46,56 +53,82 @@ const Contact = () => {
   };
 
   return (
-    <footer id="contact" className="section">
-      <div className="footer-content fade-up">
-        <h2 className="section-title">Get In Touch</h2>
-        <p>I am always open to discussing new projects, creative ideas, or opportunities. Drop me a message below!</p>
-
-        <form action="https://api.web3forms.com/submit" method="POST" className="contact-form" onSubmit={handleSubmit}>
-          <input type="hidden" name="access_key" value="bc6f0fdc-67de-4ae9-a5b4-a91d09a6e286" />
-          <input type="hidden" name="subject" value="New Submission from Portfolio" />
-
-          <div className="form-group">
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              required
-              className="hover-target"
-              value={formData.name}
-              onChange={handleChange}
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              required
-              className="hover-target"
-              value={formData.email}
-              onChange={handleChange}
-            />
+    <>
+      {/* AI Chat Widget */}
+      <div className="chat-widget-container">
+        {/* Chat Modal */}
+        <div className={`chat-modal ${isChatOpen ? 'open' : ''}`}>
+          <div className="chat-header">
+            <div className="chat-header-info">
+              <FaRobot size={20} className="ai-icon" />
+              <h3>AI Assistant</h3>
+            </div>
           </div>
-          <textarea
-            name="message"
-            placeholder="Your Message"
-            rows="5"
-            required
-            className="hover-target"
-            value={formData.message}
-            onChange={handleChange}
-          ></textarea>
+          
+          <div className="chat-body">
+            <p className="chat-welcome">Hi there! 👋 I'm Chirag's virtual assistant. Drop a message below and I'll make sure it reaches him directly!</p>
+            
+            <form action="https://api.web3forms.com/submit" method="POST" className="chat-form" onSubmit={handleSubmit}>
+              <input type="hidden" name="access_key" value="bc6f0fdc-67de-4ae9-a5b4-a91d09a6e286" />
+              <input type="hidden" name="subject" value="New Submission from Portfolio" />
 
-          <button type="submit" className="btn btn-primary hover-target">Send Message</button>
-          {status && <p className="form-status" style={{ marginTop: '15px' }}>{status}</p>}
-        </form>
+              <div className="chat-input-group">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  required
+                  className="hover-target"
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  required
+                  className="hover-target"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </div>
+              <textarea
+                name="message"
+                placeholder="How can we help you today?"
+                rows="4"
+                required
+                className="hover-target"
+                value={formData.message}
+                onChange={handleChange}
+              ></textarea>
 
+              <button type="submit" className="btn btn-primary chat-submit-btn hover-target">Send Message</button>
+              {status && <p className="chat-status">{status}</p>}
+            </form>
+          </div>
+        </div>
+
+        {/* Floating Action Button */}
+        <button 
+          className={`chat-fab hover-target ${isChatOpen ? 'active' : ''}`}
+          onClick={() => setIsChatOpen(!isChatOpen)}
+          aria-label="Open contact form"
+        >
+          {/* Pulsing notification badge in the corner */}
+          {!isChatOpen && <span className="chat-fab-badge"></span>}
+          {isChatOpen ? <FaTimes size={24} /> : <FaCommentDots size={24} />}
+        </button>
+      </div>
+
+      {/* Static Minimal Footer */}
+      <footer id="contact" className="minimal-footer">
         <div className="social-links">
           <a href="https://www.linkedin.com/in/ch1r4gsh4rm4/" target="_blank" rel="noopener noreferrer" className="hover-target">LinkedIn</a>
           <a href="https://github.com/iamchiragsharma" target="_blank" rel="noopener noreferrer" className="hover-target">GitHub</a>
         </div>
         <p className="copyright">&copy; 2026 Designed & Built by <span className="name-highlight">Chirag Sharma</span>.</p>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 };
 
