@@ -1,5 +1,64 @@
 #hero {
   padding-top: 160px;
+  position: relative;
+  background-color: var(--bg-main);
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
+/* Gradient Blobs */
+#hero::before,
+#hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.85; /* Increased base opacity for more visibility */
+  mix-blend-mode: normal;
+  transition: opacity 0.5s ease;
+}
+
+/* Cyan Blob */
+#hero::before {
+  top: -10%;
+  left: 10%;
+  width: 60vw;
+  height: 60vw;
+  max-width: 600px;
+  max-height: 600px;
+  background: radial-gradient(circle, rgba(0, 238, 255, 0.7) 0%, transparent 70%);
+  animation: float-cyan 20s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+/* Purple Blob */
+#hero::after {
+  bottom: -10%;
+  right: 10%;
+  width: 55vw;
+  height: 55vw;
+  max-width: 550px;
+  max-height: 550px;
+  background: radial-gradient(circle, rgba(174, 0, 255, 0.7) 0%, transparent 70%);
+  animation: float-purple 25s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+[data-theme='dark'] #hero::before,
+[data-theme='dark'] #hero::after {
+  opacity: 0.6; /* Boosted dark mode opacity as well */
+}
+
+@keyframes float-cyan {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(15%, 15%) scale(1.1); }
+  100% { transform: translate(-10%, 10%) scale(0.95); }
+}
+
+@keyframes float-purple {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-15%, -10%) scale(1.05); }
+  100% { transform: translate(10%, -15%) scale(1.1); }
 }
 
 .greeting {
@@ -43,6 +102,8 @@
 }
 
 .hero-content {
+  position: relative;
+  z-index: 1;
   animation: float 6s ease-in-out infinite;
 }
 
