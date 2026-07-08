@@ -79,11 +79,11 @@
 }
 
 .slider-arrow-left {
-  left: 2vw;
+  left: -34px;
 }
 
 .slider-arrow-right {
-  right: 2vw;
+  right: -34px;
 }
 
 .slider-arrow:hover {
@@ -104,12 +104,7 @@
 }
 .projects-slider-wrapper {
   position: relative;
-  width: 100vw;
-  margin-left: -50vw;
-  left: 50%;
-  /* The edge fade effect using mask-image */
-  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  width: 100%;
 }
 
 .projects-slider {
@@ -117,9 +112,13 @@
   gap: 3rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: 2rem calc(50vw - 275px); /* Centers the 550px card exactly on the screen */
+  padding: 2rem 0; /* Align perfectly to the left of the container */
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  
+  /* Edge fade effect on the right side of the slider only, so left stays sharp */
+  -webkit-mask-image: linear-gradient(to right, black 85%, transparent);
+  mask-image: linear-gradient(to right, black 85%, transparent);
 }
 
 .projects-slider::-webkit-scrollbar {
@@ -131,7 +130,7 @@
   min-width: 550px; /* Slightly larger width */
   max-width: 550px;
   flex-shrink: 0;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   
   background: var(--glass-bg);
   backdrop-filter: blur(24px);
@@ -219,6 +218,7 @@
     transform: scale(0.97); /* Subtle scale base */
     opacity: 0.75;
     filter: none;
+    scroll-snap-align: center; /* Center snap on mobile */
   }
   .project-card.active {
     transform: scale(1);
@@ -244,6 +244,7 @@
     transform: scale(0.97);
     opacity: 0.75;
     filter: none;
+    scroll-snap-align: center; /* Center snap on mobile */
   }
   .project-card.active {
     transform: scale(1);
