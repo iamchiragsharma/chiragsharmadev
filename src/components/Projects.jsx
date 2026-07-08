@@ -127,9 +127,10 @@ const Projects = () => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      const easeProgress = progress < 0.5 
-        ? 2 * progress * progress 
-        : -1 + (4 - 2 * progress) * progress;
+      // Quartic ease-in-out curve for rich, slow deceleration
+      const easeProgress = progress < 0.5
+        ? 8 * progress * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 4) / 2;
 
       element.scrollLeft = start + change * easeProgress;
 
@@ -178,8 +179,8 @@ const Projects = () => {
     const targetCard = cards[targetIndex];
     const targetScroll = targetCard.offsetLeft - (slider.clientWidth / 2 - targetCard.offsetWidth / 2);
     
-    // 800ms luxurious smooth scroll
-    smoothScroll(slider, targetScroll, 800);
+    // 1250ms slow, rich smooth scroll
+    smoothScroll(slider, targetScroll, 1250);
   };
 
   return (

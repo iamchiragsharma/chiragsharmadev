@@ -153,10 +153,19 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Hover highlight - border only! No scaling! */
+/* Hover highlight - border and colorful shadow! No scaling! */
 .project-card:hover {
   border-color: var(--text-primary) !important;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  /* Colorful glow combining purple and pink hues */
+  box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3), 
+              0 5px 20px rgba(236, 72, 153, 0.25);
+}
+
+[data-theme='light'] .project-card:hover {
+  border-color: var(--text-primary) !important;
+  /* Soft colorful glow for light theme */
+  box-shadow: 0 15px 35px rgba(139, 92, 246, 0.15), 
+              0 5px 15px rgba(236, 72, 153, 0.12);
 }
 
 /* Image */
