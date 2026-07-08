@@ -82,18 +82,14 @@ const Projects = () => {
     const cards = Array.from(slider.children);
     if (cards.length === 0) return;
 
-    // Use center point for mobile, start point for desktop
-    const isMobile = window.innerWidth <= 1024;
-    const activePoint = isMobile ? (scrollLeft + slider.clientWidth / 2) : scrollLeft;
-
+    // Active project is in the middle of the screen
+    const centerPoint = scrollLeft + slider.clientWidth / 2;
     let closestIndex = 0;
     let minDistance = Infinity;
 
     cards.forEach((card, index) => {
-      const cardLocation = isMobile 
-        ? (card.offsetLeft + card.offsetWidth / 2) 
-        : card.offsetLeft;
-      const distance = Math.abs(cardLocation - activePoint);
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(cardCenter - centerPoint);
       if (distance < minDistance) {
         minDistance = distance;
         closestIndex = index;
@@ -158,18 +154,14 @@ const Projects = () => {
     
     if (cards.length === 0) return;
 
-    // Find the currently active card dynamically
-    const isMobile = window.innerWidth <= 1024;
-    const activePoint = isMobile ? (scrollLeft + slider.clientWidth / 2) : scrollLeft;
-
+    // Find the currently active card dynamically in the middle of the screen
+    const centerPoint = scrollLeft + slider.clientWidth / 2;
     let currentCardIndex = 0;
     let minDistance = Infinity;
     
     cards.forEach((card, index) => {
-      const cardLocation = isMobile 
-        ? (card.offsetLeft + card.offsetWidth / 2) 
-        : card.offsetLeft;
-      const distance = Math.abs(cardLocation - activePoint);
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(cardCenter - centerPoint);
       if (distance < minDistance) {
         minDistance = distance;
         currentCardIndex = index;
@@ -182,11 +174,9 @@ const Projects = () => {
     
     if (targetIndex === currentCardIndex) return; // Already at end
 
-    // Calculate exact scroll position required to align the target card
+    // Calculate exact scroll position required to perfectly center the target card
     const targetCard = cards[targetIndex];
-    const targetScroll = isMobile
-      ? (targetCard.offsetLeft - (slider.clientWidth / 2 - targetCard.offsetWidth / 2))
-      : targetCard.offsetLeft;
+    const targetScroll = targetCard.offsetLeft - (slider.clientWidth / 2 - targetCard.offsetWidth / 2);
     
     // 800ms luxurious smooth scroll
     smoothScroll(slider, targetScroll, 800);
