@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import './Projects.css';
 
@@ -11,7 +11,7 @@ const projects = [
   { title: 'Unstd Clothing', type: '', images: ['/unstd_clothing.png'] },
 ];
 
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project, isActive }) => {
   const [currentImage, setCurrentImage] = useState(0);
 
   const nextImage = (e) => {
@@ -32,7 +32,7 @@ const ProjectCard = ({ project }) => {
   const showControls = project.images && project.images.length > 1;
 
   return (
-    <div className="project-card hover-target">
+    <div className={`project-card hover-target ${isActive ? 'active' : ''}`}>
       {hasImages && (
         <div className="project-image-container">
           <img src={project.images[currentImage]} alt={`${project.title} screenshot ${currentImage + 1}`} className="project-image fade-in-image" key={currentImage} />
@@ -65,6 +65,53 @@ const ProjectCard = ({ project }) => {
 const Projects = () => {
   const sliderRef = useRef(null);
   const animationRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const handleScroll = () => {
+    if (!sliderRef.current) return;
+    const slider = sliderRef.current;
+    const scrollLeft = slider.scrollLeft;
+    
+    // Check scroll boundaries (allow 5px tolerance)
+    const tolerance = 5;
+    setCanScrollLeft(scrollLeft > tolerance);
+    setCanScrollRight(scrollLeft + slider.clientWidth < slider.scrollWidth - tolerance);
+
+    const cards = Array.from(slider.children);
+    if (cards.length === 0) return;
+
+    const centerPoint = scrollLeft + slider.clientWidth / 2;
+    let closestIndex = 0;
+    let minDistance = Infinity;
+
+    cards.forEach((card, index) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(cardCenter - centerPoint);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    setActiveIndex(closestIndex);
+  };
+
+  useEffect(() => {
+    handleScroll();
+    const slider = sliderRef.current;
+    if (slider) {
+      slider.addEventListener('scroll', handleScroll);
+    }
+    window.addEventListener('resize', handleScroll);
+    return () => {
+      if (slider) {
+        slider.removeEventListener('scroll', handleScroll);
+      }
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
 
   const smoothScroll = (element, target, duration) => {
     // Cancel any ongoing animations to prevent overlapping glitches
@@ -142,18 +189,28 @@ const Projects = () => {
       </div>
       
       <div className="projects-slider-wrapper fade-up">
-        <button className="slider-arrow slider-arrow-left" onClick={() => scroll('left')} aria-label="Previous projects">
-          <FaChevronLeft />
+        <button 
+          className={`slider-arrow slider-arrow-left ${!canScrollLeft ? 'disabled' : ''}`} 
+          onClick={() => scroll('left')} 
+          aria-label="Previous projects"
+          disabled={!canScrollLeft}
+        >
+          <FaChevronLeft size={22} />
         </button>
         
         <div className="projects-slider" ref={sliderRef}>
           {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} />
+            <ProjectCard key={index} project={project} isActive={index === activeIndex} />
           ))}
         </div>
 
-        <button className="slider-arrow slider-arrow-right" onClick={() => scroll('right')} aria-label="Next projects">
-          <FaChevronRight />
+        <button 
+          className={`slider-arrow slider-arrow-right ${!canScrollRight ? 'disabled' : ''}`} 
+          onClick={() => scroll('right')} 
+          aria-label="Next projects"
+          disabled={!canScrollRight}
+        >
+          <FaChevronRight size={22} />
         </button>
       </div>
     </section>
