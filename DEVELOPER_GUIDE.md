@@ -59,7 +59,7 @@ sequenceDiagram
 
 ### Sandbox Limitations (Free Tier)
 While using Resend's free onboarding plan:
-1. The **Sender (`from`)** must be exactly: `Portfolio Contact Form <onboarding@resend.dev>`.
+1. The **Sender (`from`)** must be exactly: `New Contact Form Query`.
 2. The **Recipient (`to`)** must be set to the email address used to register the Resend account. Sending to arbitrary addresses will fail with a `403 Forbidden` error unless you verify your domain or add a payment card in Resend.
 3. Sandbox emails are frequently marked as **Spam** by Gmail/Yahoo. Always check your **Spam / Junk** folder when testing!
 

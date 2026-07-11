@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         // Note: For the free onboarding plan, Resend requires the 'from' address to be onboarding@resend.dev
-        from: 'Portfolio Contact Form <onboarding@resend.dev>',
+        from: 'New Contact Form Query',
         to: [toEmail],
         reply_to: email, // Enable replying directly to the user's provided email address
         subject: `New submission from ${name}`,
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
             <div style="max-width: 600px; margin: 0 auto; background-color: #0a0a0a; border: 1px solid #1f2937; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);">
               <!-- Gradient Header -->
               <div style="background: linear-gradient(135deg, #1e1b4b 0%, #030712 100%); padding: 30px; border-bottom: 1px solid #1f2937; text-align: center;">
-                <h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">New Portfolio Submission</h2>
+                <h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">Have a look to the new query</h2>
                 <p style="margin: 5px 0 0 0; font-size: 14px; color: #9ca3af;">You received a new message from your website contact form.</p>
               </div>
               
@@ -64,7 +64,7 @@ export default async function handler(req, res) {
                 
                 <!-- Styled Quote Block for Message -->
                 <div style="background-color: #111827; border: 1px solid #1f2937; border-radius: 8px; padding: 20px;">
-                  <h4 style="margin: 0 0 10px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; font-weight: 600;">Message Body</h4>
+                  <h4 style="margin: 0 0 10px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; font-weight: 600;">Please look at the visitor's query</h4>
                   <p style="margin: 0; font-size: 15px; color: #e5e7eb; line-height: 1.6; white-space: pre-wrap; font-style: italic;">"${message}"</p>
                 </div>
               </div>
