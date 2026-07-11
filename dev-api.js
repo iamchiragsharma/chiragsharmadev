@@ -65,7 +65,7 @@ const handler = async (req, res) => {
       }
 
       // Read recipient email from .env, or fallback to default email address
-      const toEmail = process.env.TO_EMAIL || 'chiragsharmadec@gmail.com';
+      const toEmail = process.env.TO_EMAIL || 'chirag2001sharma@gmail.com';
 
       // Send request to Resend API using standard HTTP fetch
       const response = await fetch('https://api.resend.com/emails', {

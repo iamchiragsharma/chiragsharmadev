@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   }
 
   // Retrieve the recipient email address, fallback if not set
-  const toEmail = process.env.TO_EMAIL || 'chiragsharmadec@gmail.com';
+  const toEmail = process.env.TO_EMAIL || 'chirag2001sharma@gmail.com';
 
   try {
     // Send email using Resend's REST API endpoint
