@@ -144,7 +144,7 @@
   
   /* Standard border, no scaling, no blur, no opacity reduction */
   border: 1px solid var(--glass-border);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
 }
 
 /* Active card highlight (brighter border and shadow) */
@@ -153,19 +153,16 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Hover highlight - border and colorful shadow! No scaling! */
+/* Hover highlight - slow white box shadow for dark theme, no scaling or jumps */
 .project-card:hover {
-  border-color: var(--text-primary) !important;
-  /* Colorful glow combining purple and pink hues */
-  box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3), 
-              0 5px 20px rgba(236, 72, 153, 0.25);
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 15px 40px rgba(255, 255, 255, 0.12);
 }
 
 [data-theme='light'] .project-card:hover {
-  border-color: var(--text-primary) !important;
-  /* Soft colorful glow for light theme */
-  box-shadow: 0 15px 35px rgba(139, 92, 246, 0.15), 
-              0 5px 15px rgba(236, 72, 153, 0.12);
+  border-color: rgba(0, 0, 0, 0.2) !important;
+  /* Soft grey shadow for light mode visibility */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
 }
 
 /* Image */

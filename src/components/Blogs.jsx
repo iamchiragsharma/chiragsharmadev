@@ -5,11 +5,14 @@ import { sampleBlogs } from '../data/blogsData';
 import './Blogs.css';
 
 const Blogs = () => {
+  // State hook to store the list of blog articles
   const [blogs, setBlogs] = useState([]);
+  // State hook to track search field text input
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Load articles when the component mounts
   useEffect(() => {
-    // Load blogs from localStorage or initialize with sample data
+    // Attempt to load previously customized articles from localStorage cache
     try {
       const stored = localStorage.getItem('blogs_v4');
       if (stored) {
@@ -23,34 +26,40 @@ const Blogs = () => {
       console.error("Error loading blogs from localStorage:", e);
     }
     
-    // Fallback to sample data
+    // Fallback if cache is empty: load local default static blogs and populate localStorage
     setBlogs(sampleBlogs);
     localStorage.setItem('blogs_v4', JSON.stringify(sampleBlogs));
   }, []);
 
+  // Performance optimized filter computation. Only recalculates when searchQuery or blogs change.
   const filteredBlogs = useMemo(() => {
     if (!searchQuery.trim()) return blogs;
     
     const query = searchQuery.toLowerCase();
+    // Return articles matching title or excerpt text
     return blogs.filter(blog => 
       blog.title.toLowerCase().includes(query) || 
       blog.excerpt.toLowerCase().includes(query)
     );
   }, [blogs, searchQuery]);
 
+  // Set up animation observers to apply visual fade-in transitions on page scroll
   useEffect(() => {
     const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        // Add 'visible' CSS class to elements when they scroll into the viewport
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
         }
       });
     }, observerOptions);
 
+    // Observe all DOM elements with the class 'fade-up'
     const elements = document.querySelectorAll('.fade-up');
     elements.forEach((el) => observer.observe(el));
 
+    // Clean up observer when component unmounts or search query filters re-render cards
     return () => observer.disconnect();
   }, [filteredBlogs]);
 

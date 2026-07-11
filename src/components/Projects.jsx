@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import './Projects.css';
 
+// Local projects list database. Add or modify project entries here.
+// Each project can have a title, type label, and an array of screenshot image URLs.
 const projects = [
   { title: 'BuyNutritionals', type: 'Company\'s External Project', images: ['/Buynutritionals.png'] },
   { title: 'BST Group', type: 'Company\'s External Project', images: ['/bst-group.png', '/bst-tfs.png', '/bst-health.png'] },
@@ -11,18 +13,22 @@ const projects = [
   { title: 'Unstd Clothing', type: '', images: ['/unstd_clothing.png'] },
 ];
 
+// Sub-component representing a single project card in the carousel
 const ProjectCard = ({ project, isActive }) => {
+  // Track currently active screenshot image index for projects with multiple screenshots
   const [currentImage, setCurrentImage] = useState(0);
 
+  // Switch to next screenshot
   const nextImage = (e) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Prevent card selection click triggers
     if (project.images && project.images.length > 0) {
       setCurrentImage((prev) => (prev + 1) % project.images.length);
     }
   };
 
+  // Switch to previous screenshot
   const prevImage = (e) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Prevent card selection click triggers
     if (project.images && project.images.length > 0) {
       setCurrentImage((prev) => (prev - 1 + project.images.length) % project.images.length);
     }
@@ -32,7 +38,7 @@ const ProjectCard = ({ project, isActive }) => {
   const showControls = project.images && project.images.length > 1;
 
   return (
-    <div className={`project-card hover-target ${isActive ? 'active' : ''}`}>
+    <div className={`project-card ${isActive ? 'active' : ''}`}>
       {hasImages && (
         <div className="project-image-container">
           <img src={project.images[currentImage]} alt={`${project.title} screenshot ${currentImage + 1}`} className="project-image fade-in-image" key={currentImage} />
@@ -62,13 +68,18 @@ const ProjectCard = ({ project, isActive }) => {
   );
 };
 
+// Main Projects layout component featuring a snap-scroll carousel
 const Projects = () => {
   const sliderRef = useRef(null);
   const animationRef = useRef(null);
+  
+  // Track index of project currently centered in viewport
   const [activeIndex, setActiveIndex] = useState(0);
+  // Track scroll position status to toggle disabled state of navigation arrows
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
+  // Monitor scroll positioning to update active indexes and arrow states
   const handleScroll = () => {
     if (!sliderRef.current) return;
     const slider = sliderRef.current;
@@ -82,7 +93,7 @@ const Projects = () => {
     const cards = Array.from(slider.children);
     if (cards.length === 0) return;
 
-    // Active project is in the middle of the screen
+    // Detect which project is closest to the middle of the carousel container
     const centerPoint = scrollLeft + slider.clientWidth / 2;
     let closestIndex = 0;
     let minDistance = Infinity;
@@ -99,6 +110,7 @@ const Projects = () => {
     setActiveIndex(closestIndex);
   };
 
+  // Bind and unbind event listeners for scrolling and window resizing
   useEffect(() => {
     handleScroll();
     const slider = sliderRef.current;
@@ -114,6 +126,7 @@ const Projects = () => {
     };
   }, []);
 
+  // Custom rich smooth-scroll animator
   const smoothScroll = (element, target, duration) => {
     // Cancel any ongoing animations to prevent overlapping glitches
     cancelAnimationFrame(animationRef.current);
@@ -142,10 +155,12 @@ const Projects = () => {
       }
     };
 
+    // Temporarily disable standard CSS scroll snapping to avoid animation conflicts
     element.style.scrollSnapType = 'none';
     animationRef.current = requestAnimationFrame(animateScroll);
   };
 
+  // Scroll to previous or next card
   const scroll = (direction) => {
     if (!sliderRef.current) return;
     
@@ -179,7 +194,7 @@ const Projects = () => {
     const targetCard = cards[targetIndex];
     const targetScroll = targetCard.offsetLeft - (slider.clientWidth / 2 - targetCard.offsetWidth / 2);
     
-    // 1250ms slow, rich smooth scroll
+    // Trigger the 1250ms slow, rich smooth scroll
     smoothScroll(slider, targetScroll, 1250);
   };
 
