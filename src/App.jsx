@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import TopBar from './components/TopBar';
 import Home from './components/Home';
+import AIAssistant from './components/AIAssistant';
 import './App.css';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path="*" element={<Home />} />
           </Routes>
         </main>
+        <AIAssistant />
       </div>
     </Router>
   );

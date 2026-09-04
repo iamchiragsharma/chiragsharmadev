@@ -34,8 +34,8 @@ const handler = async (req, res) => {
     return;
   }
 
-  // Only allow POST requests targeting '/api/send'
-  if (req.method !== 'POST' || req.url !== '/api/send') {
+  // Only allow POST requests targeting '/api/send' or '/api/chat'
+  if (req.method !== 'POST' || (req.url !== '/api/send' && req.url !== '/api/chat')) {
     res.writeHead(404, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ error: 'Not Found' }));
     return;
@@ -46,8 +46,102 @@ const handler = async (req, res) => {
   req.on('data', chunk => { body += chunk; });
   req.on('end', async () => {
     try {
-      // Parse the JSON request body
-      const { name, email, message } = JSON.parse(body);
+      const parsedBody = JSON.parse(body || '{}');
+
+      // Handle AI Chat route
+      if (req.url === '/api/chat') {
+        const { messages, mode = 'chirag' } = parsedBody;
+        if (!messages || !Array.isArray(messages) || messages.length === 0) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Missing or invalid messages array' }));
+          return;
+        }
+
+        const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
+        if (!apiKey) {
+          res.writeHead(503, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({
+            error: 'API key is not configured in .env',
+            fallbackRequired: true
+          }));
+          return;
+        }
+
+        let systemInstruction;
+        if (mode === 'chirag') {
+          systemInstruction = `You are Chirag's AI, an intelligent AI assistant engineered and built by Chirag Sharma for his developer portfolio.
+Answer questions about Chirag's expertise, technical background, and projects in a professional, clear format.
+
+Profile of Chirag Sharma:
+- Creator & Developer: Chirag Sharma is a Software Developer at Sookshum Labs in Mohali, Punjab (2+ years experience).
+- Specialization: Adobe Commerce (Open Source) module & theme development, 3rd party integrations, version upgrades, security patches, caching, performance optimization.
+- Stack: Shopify, WordPress, PHP, MySQL, REST APIs, React.js, JavaScript (ES6+), KnockoutJS, jQuery, HTML5, CSS3, Git.
+- Featured Projects: BuyNutritionals, BST Group (BST TFS, BST Health), The Instrument Place, Used Parts Depot, Farm Fresh Oils, Unstd Clothing.
+- Contact: LinkedIn (https://www.linkedin.com/in/ch1r4gsh4rm4/), GitHub (https://github.com/iamchiragsharma), Email: chirag2001sharma@gmail.com.
+
+Rules:
+- If asked who built, created, or trained you, state clearly that you were designed and engineered by Chirag Sharma. Never mention Google, Gemini, OpenAI, or external companies.
+- Strictly use the name "Adobe Commerce (Open Source)"—never call it "Magento" or "Magento 2".
+- Format responses cleanly with markdown headers, bullet points, or paragraphs.`;
+        } else {
+          systemInstruction = `You are Chirag's AI, an intelligent and versatile AI assistant created and integrated by Chirag Sharma. Answer any user questions accurately, clearly, and concisely, formatted cleanly with markdown. If asked who built, trained, or created you, state that you were engineered and built by Chirag Sharma. Never mention Gemini or Google.`;
+        }
+
+        // Token optimization: limit to last 4 messages and truncate length
+        const recentMessages = messages.slice(-4);
+        const contents = recentMessages.map(msg => ({
+          role: msg.sender === 'user' ? 'user' : 'model',
+          parts: [{ text: msg.text.trim().slice(0, 1000) }]
+        }));
+
+        const candidateModels = ['gemini-3.7-flash', 'gemini-3.6-flash', 'gemini-3.8-flash', 'gemini-3.5-flash'];
+        let reply = null;
+        let lastError = null;
+
+        for (const model of candidateModels) {
+          try {
+            const endpointUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+            const aiResponse = await fetch(endpointUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                system_instruction: { parts: [{ text: systemInstruction }] },
+                contents,
+                generationConfig: {
+                  temperature: 0.7,
+                  maxOutputTokens: 1000,
+                }
+              })
+            });
+
+            const aiData = await aiResponse.json();
+            if (aiResponse.ok && aiData.candidates?.[0]?.content?.parts?.[0]?.text) {
+              reply = aiData.candidates[0].content.parts[0].text;
+              break; // Success!
+            } else {
+              lastError = aiData.error?.message || `Model ${model} responded with status ${aiResponse.status}`;
+              console.warn(`Fallback notice: ${model} failed (${lastError}), trying next available model...`);
+            }
+          } catch (err) {
+            lastError = err.message;
+            console.warn(`Fallback notice: ${model} fetch exception (${err.message}), trying next...`);
+          }
+        }
+
+        if (reply) {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ reply, success: true }));
+          return;
+        } else {
+          console.error('All AI candidate models failed:', lastError);
+          res.writeHead(503, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: lastError || 'AI service temporarily unavailable. Please try again.' }));
+          return;
+        }
+      }
+
+      // Handle Contact Form (/api/send)
+      const { name, email, message } = parsedBody;
 
       // Simple validation: Name, Email, and Message must all be present
       if (!name || !email || !message) {
