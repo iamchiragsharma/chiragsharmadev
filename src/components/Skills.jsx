@@ -1,5 +1,6 @@
 import React from 'react';
-import { FaMagento, FaShopify, FaWordpress, FaCode, FaDatabase, FaServer, FaRocket, FaTools, FaSearch, FaBolt, FaHtml5, FaCss3, FaJs, FaPhp, FaReact, FaGithub, FaBitbucket, FaTasks, FaProjectDiagram, FaFileAlt, FaBrain } from 'react-icons/fa';
+import { FaShopify, FaWordpress, FaCode, FaDatabase, FaServer, FaRocket, FaTools, FaSearch, FaBolt, FaHtml5, FaCss3, FaJs, FaPhp, FaReact, FaGithub, FaBitbucket, FaTasks, FaProjectDiagram, FaFileAlt, FaBrain } from 'react-icons/fa';
+import { SiAdobe } from 'react-icons/si';
 import './Skills.css';
 
 const Skills = () => {
@@ -7,7 +8,7 @@ const Skills = () => {
     {
       category: 'Adobe Commerce (Open Source) & E-Commerce',
       skills: [
-        { name: 'Adobe Commerce (Open Source) Core', icon: <FaMagento /> },
+        { name: 'Adobe Commerce (Open Source) Core', icon: <SiAdobe /> },
         { name: 'Shopify', icon: <FaShopify /> },
         { name: 'WordPress', icon: <FaWordpress /> },
         { name: 'Theme Customization', icon: <FaCode /> },
