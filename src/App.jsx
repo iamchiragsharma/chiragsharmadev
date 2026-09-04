@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import TopBar from './components/TopBar';
 import Home from './components/Home';
-import Blogs from './components/Blogs';
-import BlogDetail from './components/BlogDetail';
 import './App.css';
 
 function App() {
@@ -29,8 +27,7 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/blogs" element={<Blogs />} />
-            <Route path="/blogs/:id" element={<BlogDetail />} />
+            <Route path="*" element={<Home />} />
           </Routes>
         </main>
       </div>

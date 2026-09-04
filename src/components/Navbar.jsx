@@ -45,7 +45,6 @@ const Navbar = ({ theme, toggleTheme }) => {
         <NavLink id="skills">Skills</NavLink>
         <NavLink id="projects">Projects</NavLink>
         <NavLink id="contact">Contact</NavLink>
-        <li><Link to="/blogs" onClick={() => setIsOpen(false)}>Blogs</Link></li>
       </ul>
       <div className="nav-actions">
         <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle Dark Mode">

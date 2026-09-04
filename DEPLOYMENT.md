@@ -57,7 +57,7 @@ If you bought your domain elsewhere:
 
 ---
 
-> **Note:** Because this project includes a `vercel.json` file, your React Router links (like `/blogs`) will work perfectly in production without causing "404 Not Found" errors when users refresh the page.
+> **Note:** Because this project includes a `vercel.json` file, your React Router client-side routes will work perfectly in production without causing "404 Not Found" errors when users refresh the page.
 
 ---
 

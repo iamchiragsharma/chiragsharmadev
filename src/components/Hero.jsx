@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Hero.css';
 
-const textArray = ["Software Developer", "Magento 2 Specialist", "Problem Solver"];
+const textArray = ["Software Developer", "Adobe Commerce (Open Source) Specialist", "Problem Solver"];
 
 const Hero = () => {
   const [currentText, setCurrentText] = useState('');

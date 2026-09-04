@@ -4,8 +4,7 @@ A modern React-based portfolio website with improved UI/UX, featuring:
 
 - Responsive design with smooth animations
 - Skills section with icons using React Icons
-- Blogs section with routing
-- Individual blog view with like and comment functionality
+- Interactive Projects showcase
 - Contact form
 
 ## Getting Started
@@ -36,8 +35,6 @@ The app will run on [http://localhost:3000](http://localhost:3000).
 ## Features
 
 - **Home Page**: Hero section, about, skills with icons, projects, contact
-- **Blogs Page**: List of blog posts
-- **Blog Detail**: Individual blog view with like and comment features
 - **Responsive Design**: Works on all device sizes
 - **Smooth Animations**: Fade-up animations and hover effects
 
@@ -47,4 +44,3 @@ The app will run on [http://localhost:3000](http://localhost:3000).
 - React Router DOM
 - React Icons
 - CSS3 with custom properties
-- Local Storage for blog data

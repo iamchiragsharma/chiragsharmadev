@@ -5,15 +5,15 @@ import './Skills.css';
 const Skills = () => {
   const skillsData = [
     {
-      category: 'Magento 2 & E-Commerce',
+      category: 'Adobe Commerce (Open Source) & E-Commerce',
       skills: [
-        { name: 'Magento 2 Core', icon: <FaMagento /> },
+        { name: 'Adobe Commerce (Open Source) Core', icon: <FaMagento /> },
         { name: 'Shopify', icon: <FaShopify /> },
         { name: 'WordPress', icon: <FaWordpress /> },
         { name: 'Theme Customization', icon: <FaCode /> },
         { name: 'Module Customization', icon: <FaTools /> },
         { name: '3rd Party Integrations', icon: <FaRocket /> },
-        { name: 'Magento Upgrades', icon: <FaBolt /> },
+        { name: 'Adobe Commerce (Open Source) Upgrades', icon: <FaBolt /> },
         { name: 'Patches Applied', icon: <FaTools /> },
         { name: 'Site Performance', icon: <FaBolt /> },
         { name: 'Caching', icon: <FaServer /> },
